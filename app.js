@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const errorHander = require('./controllers/errorController');
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -18,7 +20,7 @@ app.use('/admin', admin.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found', path: "Not Found" });
+  errorHander.handleError(req, res, next);
 });
 
 app.listen(3000);
